@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import requests
+import html5lib
 
 def convert_df_csv(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
@@ -13,16 +14,19 @@ if url == '':
     st.error("Please enter a valid url to proceed.")
 elif url != '':
     html = requests.get(url).content
-    df_list = pd.read_html(html)
-    st.balloons()
-    df = df_list[0]
-    st.write(df)
-    csv = convert_df_csv(df)
-    st.download_button(
+    try:
+        df_list = pd.read_html(html)
+    except:
+        st.error("Oops could not fetch any table.")
+    else:
+        st.balloons()
+        df = df_list[0]
+        st.write(df)
+        csv = convert_df_csv(df)
+        st.download_button(
             label="Download data as CSV",
             data=csv,
             file_name='example.csv',
             mime='text/csv',
         )
-    
        
