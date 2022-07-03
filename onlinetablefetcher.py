@@ -17,14 +17,14 @@ elif url != '':
         df_list = pd.read_html(html)
     except:
         st.error("Oops could not fetch any table.")
-    else:
-        st.balloons()
-        df = df_list[0]
-        st.write(df)
-        csv = convert_df_csv(df)
-        st.download_button(
+    
+    st.balloons()
+    df = df_list[0]
+    st.write(df)
+    csv = convert_df_csv(df)
+    st.download_button(
             label="Download data as CSV",
             data=csv,
             file_name='example.csv',
             mime='text/csv',
-        )
+        )   
