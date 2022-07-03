@@ -13,19 +13,16 @@ if url == '':
     st.error("Please enter a valid url to proceed.")
 elif url != '':
     html = requests.get(url).content
-    try:
-        df_list = pd.read_html(html)
-        st.balloons()
-        df = df_list[0]
-        st.write(df)
-        csv = convert_df_csv(df)
-        st.download_button(
+    df_list = pd.read_html(html)
+    st.balloons()
+    df = df_list[0]
+    st.write(df)
+    csv = convert_df_csv(df)
+    st.download_button(
             label="Download data as CSV",
             data=csv,
             file_name='example.csv',
             mime='text/csv',
         )
-    except:
-        st.error("Oops could not fetch any table.")
     
        
